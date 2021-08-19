@@ -11,6 +11,7 @@ let initialTodos: Itodo[] = [];
 
 export const useTodo = () => {
   const [todoState, setTodoState] = useState(initialTodos);
+  console.log(todoState[0])
   var nextIdState = 0;
   const incrementNextId = () => {
     nextIdState = nextIdState + 1;
@@ -31,14 +32,14 @@ export const useTodo = () => {
   };
 
   const removeTodo = (id: number) => {
-    setTodoState((prevState: any) => 
+    setTodoState((prevState: Itodo[]) => 
       prevState.filter((todo: Itodo) => todo.id !== id)
     );
   };
 
   const createTodo = (todo: Itodo) => {
-    const nextId = todoState.length + 1;
-    setTodoState((prevState : any) =>
+    const nextId = todoState[todoState.length - 1].id + 1
+    setTodoState((prevState : Itodo[]) => 
       prevState.concat({
         ...todo,
         id: nextId
