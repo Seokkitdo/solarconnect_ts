@@ -22,7 +22,7 @@ export const useTodo = () => {
 
   const removeTodo = (id: number) => {
     setTodoState((prevState: any) =>
-      prevState.filter((todo: Itodo) => todo.id === id)
+      prevState.filter((todo: Itodo) => todo.id !== id)
     );
   };
 
@@ -53,7 +53,6 @@ export const useTodo = () => {
   useEffect(() => {
     saveData();
   }, [todoState]);
-  
   useEffect(() => {
     loadData();
   }, []);
