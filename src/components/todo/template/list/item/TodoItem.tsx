@@ -1,5 +1,5 @@
 import { CheckOutlined, DeleteOutlined } from "@ant-design/icons";
-import { Itodo } from "components/todo/TodoService";
+import { Itodo } from "../../../TodoService";
 import React from "react";
 import styled, { css } from "styled-components";
 

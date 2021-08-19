@@ -21,15 +21,26 @@ const DayText = styled.div`
   padding-top: 5px;
 `;
 
+
+
 const TodoHead = () => {
   //@TODO 현재 시간을 표시해야합니다.
-  const dayString = "Tuesday";
-  const dateString = "July 20, 2021";
+  const getNow = () => {
+    let d = new Date();
+    let currentTime = d.toLocaleDateString("en-us", {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: '2-digit'
+    })
+    return currentTime
+  }
 
+  let TodoTime: string[] =  getNow().split(',')
   return (
     <TodoHeadBlock>
-      <DayText>{dayString}</DayText>
-      <DateText>{dateString}</DateText>
+      <DayText>{TodoTime[0]}</DayText>
+      <DateText>{TodoTime[1]},{TodoTime[2]}</DateText>
     </TodoHeadBlock>
   );
 };

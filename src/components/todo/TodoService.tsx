@@ -21,14 +21,14 @@ export const useTodo = () => {
   };
 
   const removeTodo = (id: number) => {
-    setTodoState((prevState) =>
+    setTodoState((prevState: any) =>
       prevState.filter((todo: Itodo) => todo.id === id)
     );
   };
 
   const createTodo = (todo: Itodo) => {
     const nextId = todoState.length + 1;
-    setTodoState((prevState) =>
+    setTodoState((prevState : any) =>
       prevState.concat({
         ...todo,
         id: nextId
@@ -49,13 +49,16 @@ export const useTodo = () => {
   const saveData = () => {
     localStorage.setItem("todos", JSON.stringify(todoState));
   };
-  useEffect(() => {
-    loadData();
-  }, []);
 
   useEffect(() => {
     saveData();
   }, [todoState]);
+  
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  
 
   return {
     todoState,
