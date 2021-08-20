@@ -4,6 +4,7 @@ import { PlusCircleOutlined } from "@ant-design/icons";
 import { Itodo } from '../../TodoService'
 import { DatePicker, Modal} from 'antd';
 
+
 const CircleButton = styled.button<{ open: boolean }>`
   background: #33bb77;
   width: 50px;
@@ -65,19 +66,7 @@ const TodoCreate = ({
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("");
   const [date, setDate] = useState("")
-  const [isModalVisible, setIsModalVisible] = useState(false);
-
-  const showModal = () => {
-    setIsModalVisible(true);
-  };
-
-  const handleOk = () => {
-    setIsModalVisible(false);
-  };
-
-  const handleCancel = () => {
-    setIsModalVisible(false);
-  };
+  const [modal, contextHolder] = Modal.useModal();
 
 
   const handleToggle = () => setOpen(!open);
@@ -87,7 +76,11 @@ const TodoCreate = ({
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // 새로고침 방지
     if(!value || !date) {
-      showModal()
+      modal.warning({
+        title: 'Warning',
+        content: 
+          !value ? '할일을 입력해주세요' : '날짜를 입력해주세요'
+      })
     } else {
       createTodo({
         id: nextId,
@@ -111,10 +104,7 @@ const TodoCreate = ({
   return (
     <>
       <InsertFormPositioner>
-        <Modal title="Alert" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel} okText="확인"
-          cancelText="취소">
-          <p>할일 또는 날짜를 입력해주세요</p>
-        </Modal>
+        {contextHolder}
         <InsertForm onSubmit={handleSubmit}>
           <Input
             autoFocus
