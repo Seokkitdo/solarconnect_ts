@@ -12,7 +12,6 @@ let initialTodos: Itodo[] = [];
 
 export const useTodo = () => {
   const [todoState, setTodoState] = useState(initialTodos);
-  console.log(todoState)
   var nextIdState = 0;
   const incrementNextId = () => {
     nextIdState = nextIdState + 1;
