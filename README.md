@@ -56,4 +56,5 @@ $ npm run start
 ## 🎨Preview
 <br>
 
-![솔라커넥트](https://user-images.githubusercontent.com/39605922/130229368-57662946-779c-4513-b966-ef0d9fd93eec.gif)
+![솔라커넥트](https://user-images.githubusercontent.com/39605922/130231598-5cc731af-2b89-49b8-9890-5cf0940ab575.gif)
+
