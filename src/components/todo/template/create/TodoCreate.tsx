@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { PlusCircleOutlined } from "@ant-design/icons";
 import { Itodo } from '../../TodoService'
+import { DatePicker} from 'antd';
 
 const CircleButton = styled.button<{ open: boolean }>`
   background: #33bb77;
@@ -38,7 +39,7 @@ const InsertForm = styled.form`
 const Input = styled.input`
   padding: 12px;
   border: 1px solid #dddddd;
-  width: 100%;
+  width: 90%;
   outline: none;
   font-size: 21px;
   box-sizing: border-box;
@@ -62,6 +63,7 @@ const TodoCreate = ({
 }: TodoCreateProps) => {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("");
+  const [date, setDate] = useState("")
 
   const handleToggle = () => setOpen(!open);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>
@@ -73,14 +75,20 @@ const TodoCreate = ({
     createTodo({
       id: nextId,
       text: value,
-      done: false
+      done: false,
+      deadline: date,
     });
     incrementNextId(); // nextId 하나 증가
 
     setValue(""); // input 초기화
+    setDate("")
     setOpen(false); // open 닫기
   };
 
+  function onChange(date:any, dateString:string) {
+    setDate(dateString)
+  }
+  
   return (
     <>
       <InsertFormPositioner>
@@ -91,7 +99,7 @@ const TodoCreate = ({
             onChange={handleChange}
             value={value}
           />
-
+          <DatePicker placeholder="마감날짜" onChange={onChange}/>
           <CircleButton onClick={handleToggle} open={open}>
             <PlusCircleOutlined />
           </CircleButton>

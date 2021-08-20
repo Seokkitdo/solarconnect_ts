@@ -54,6 +54,17 @@ const Text = styled.div<{ done: boolean }>`
     `}
 `;
 
+const Deadline = styled.div<{done: boolean}>`
+    flex: 0.2;
+    font-size: 16px;
+    color: #119955;
+    ${(props) =>
+       props.done &&
+        css`
+        color: #ced4da;
+        text-decoration: line-through;
+    `}
+`;
 interface TodoItemProps {
   toggleTodo: (id: number) => void;
   removeTodo: (id: number) => void;
@@ -75,6 +86,7 @@ const TodoItem = ({ toggleTodo, removeTodo, todo }: TodoItemProps) => {
         {todo.done && <CheckOutlined />}
       </CheckCircle>
       <Text done={todo.done}>{todo.text}</Text>
+      <Deadline done={todo.done}>{todo.deadline}</Deadline>
       <Remove onClick={handleRemove}>
         <DeleteOutlined />
       </Remove>
