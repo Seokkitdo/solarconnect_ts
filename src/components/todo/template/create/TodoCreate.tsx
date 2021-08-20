@@ -79,7 +79,7 @@ const TodoCreate = ({
       modal.warning({
         title: 'Warning',
         content: 
-          !value ? '할일을 입력해주세요' : '날짜를 입력해주세요'
+          !value ? '할일을 입력해주세요' : '종료 날짜를 입력해주세요'
       })
     } else {
       createTodo({
