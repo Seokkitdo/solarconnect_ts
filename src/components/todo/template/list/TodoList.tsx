@@ -1,7 +1,7 @@
-import { Itodo } from "../../TodoService";
 import React from "react";
 import styled from "styled-components";
 import TodoItem from "./item/TodoItem";
+import { Itodo } from "../../TodoService";
 
 const TodoListBlock = styled.div`
   flex: 1;
@@ -16,11 +16,19 @@ interface TodoListProps {
   removeTodo: (id: number) => void;
 }
 
+
+
 const TodoList = ({ toggleTodo, removeTodo, todos }: TodoListProps) => {
+  const sort = (todos: Itodo[]) => {
+    let doneTodos = todos.filter(todo => todo.done)
+    let newTodos = todos.filter(todo => !todo.done).concat(...doneTodos)
+    return newTodos
+  }  
+  
   return (
     <TodoListBlock>
       {todos &&
-        todos.map((todo) => (
+        sort(todos).map((todo) => (
           <TodoItem
             toggleTodo={toggleTodo}
             removeTodo={removeTodo}
