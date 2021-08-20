@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { PlusCircleOutlined } from "@ant-design/icons";
 import { Itodo } from '../../TodoService'
-import { DatePicker} from 'antd';
+import { DatePicker, Modal} from 'antd';
 
 const CircleButton = styled.button<{ open: boolean }>`
   background: #33bb77;
@@ -20,6 +20,7 @@ const CircleButton = styled.button<{ open: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer
 `;
 
 const InsertFormPositioner = styled.div`
@@ -64,6 +65,20 @@ const TodoCreate = ({
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("");
   const [date, setDate] = useState("")
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleOk = () => {
+    setIsModalVisible(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
+
 
   const handleToggle = () => setOpen(!open);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) =>
@@ -71,18 +86,22 @@ const TodoCreate = ({
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // 새로고침 방지
-
-    createTodo({
-      id: nextId,
-      text: value,
-      done: false,
-      deadline: date,
-    });
-    incrementNextId(); // nextId 하나 증가
-
-    setValue(""); // input 초기화
-    setDate("")
-    setOpen(false); // open 닫기
+    if(!value || !date) {
+      showModal()
+    } else {
+      createTodo({
+        id: nextId,
+        text: value,
+        done: false,
+        deadline: date,
+      });
+      incrementNextId(); // nextId 하나 증가
+  
+      setValue(""); // input 초기화
+      setDate("")
+      setOpen(false); // open 닫기
+    }
+    
   };
 
   function onChange(date:any, dateString:string) {
@@ -92,6 +111,10 @@ const TodoCreate = ({
   return (
     <>
       <InsertFormPositioner>
+        <Modal title="Alert" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel} okText="확인"
+          cancelText="취소">
+          <p>할일 또는 날짜를 입력해주세요</p>
+        </Modal>
         <InsertForm onSubmit={handleSubmit}>
           <Input
             autoFocus
@@ -99,7 +122,7 @@ const TodoCreate = ({
             onChange={handleChange}
             value={value}
           />
-          <DatePicker placeholder="마감날짜" onChange={onChange}/>
+          <DatePicker  placeholder="마감날짜" onChange={onChange}/>
           <CircleButton onClick={handleToggle} open={open}>
             <PlusCircleOutlined />
           </CircleButton>
